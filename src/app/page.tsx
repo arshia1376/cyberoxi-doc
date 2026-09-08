@@ -31,12 +31,12 @@ export default function Home() {
   const { ui } = useContent();
 
   return (
-    <div className="relative min-w-0 max-w-full overflow-x-clip">
+    <div className="relative min-w-0 max-w-full max-md:overflow-x-clip">
       <Background />
       <div className="site-noise" />
       <CursorGlow />
       <Header />
-      <main className="min-w-0 max-w-full overflow-x-clip">
+      <main className="min-w-0 max-w-full max-md:overflow-x-clip">
         <Hero />
         <Worlds />
         <Clients />

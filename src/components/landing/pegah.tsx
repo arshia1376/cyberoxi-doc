@@ -109,7 +109,7 @@ export function Pegah() {
 
   return (
     <section>
-      <StickyScene id="pegah" heightClass="h-[440vh]">
+      <StickyScene id="pegah" heightClass="md:h-[440vh]">
         {(progress) => <PegahInner progress={progress} />}
       </StickyScene>
       <div className="mx-auto grid max-w-7xl gap-5 px-4 pb-16 sm:px-8 sm:pb-24 md:grid-cols-3">

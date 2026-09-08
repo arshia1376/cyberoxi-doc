@@ -195,7 +195,7 @@ function WorldsInner({ progress }: { progress: MotionValue<number> }) {
   const reduce = Boolean(reduceMotion) || !desktop;
 
   return (
-    <div className="mx-auto flex h-full w-full min-w-0 max-w-7xl flex-col justify-center gap-6 overflow-x-hidden px-4 max-md:justify-start sm:px-8">
+    <div className="mx-auto flex h-full w-full min-w-0 max-w-7xl flex-col justify-center gap-6 max-md:overflow-x-hidden px-4 max-md:justify-start sm:px-8">
       <div className="max-w-3xl min-w-0">
         <p className="text-xs tracking-[0.3em] text-[var(--gold)] max-md:tracking-[0.12em]">{worlds.kicker}</p>
         <h2 className="mt-3 max-w-full text-3xl font-bold sm:text-5xl">{worlds.title}</h2>
@@ -230,7 +230,7 @@ function WorldsInner({ progress }: { progress: MotionValue<number> }) {
 
 export function Worlds() {
   return (
-    <StickyScene id="worlds" heightClass="h-[220vh]">
+    <StickyScene id="worlds" heightClass="md:h-[180vh]">
       {(progress) => <WorldsInner progress={progress} />}
     </StickyScene>
   );

@@ -173,7 +173,7 @@ function CallistoInner({ progress }: { progress: MotionValue<number> }) {
 export function Callisto() {
   return (
     <section>
-      <StickyScene id="callisto" heightClass="h-[380vh]">
+      <StickyScene id="callisto" heightClass="md:h-[380vh]">
         {(progress) => <CallistoInner progress={progress} />}
       </StickyScene>
       <CallistoNews />

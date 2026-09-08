@@ -1,6 +1,6 @@
 "use client";
 
-import { useMotionValue, useScroll, type MotionValue } from "motion/react";
+import { useMotionValue, useMotionValueEvent, useScroll, type MotionValue } from "motion/react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 
 type StickySceneProps = {
@@ -27,7 +27,7 @@ export function useDesktopSticky() {
 
 export function StickyScene({
   children,
-  heightClass = "h-[240vh]",
+  heightClass = "md:h-[240vh]",
   id,
   className,
   fillMobile = false,
@@ -35,19 +35,38 @@ export function StickyScene({
   const ref = useRef<HTMLDivElement>(null);
   const desktop = useDesktopSticky();
   const idle = useMotionValue(0);
+  const safe = useMotionValue(0);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end end"],
   });
 
+  useMotionValueEvent(scrollYProgress, "change", (value) => {
+    if (!desktop) {
+      safe.set(0);
+      return;
+    }
+    const el = ref.current;
+    const tall = (el?.offsetHeight ?? 0) > window.innerHeight * 1.35;
+    if (!tall || window.scrollY < 4) {
+      safe.set(0);
+      return;
+    }
+    safe.set(value);
+  });
+
+  useEffect(() => {
+    if (!desktop) safe.set(0);
+  }, [desktop, safe]);
+
   return (
-    <section id={id} ref={ref} className={`relative max-md:!h-auto ${heightClass} ${className ?? ""}`}>
+    <section id={id} ref={ref} className={`relative h-auto ${heightClass} ${className ?? ""}`}>
       <div
-        className={`flex w-full min-w-0 max-w-full items-center overflow-x-hidden md:sticky md:top-0 md:h-screen md:overflow-hidden ${
+        className={`flex w-full min-w-0 max-w-full items-center max-md:overflow-x-clip md:sticky md:top-0 md:h-dvh md:overflow-hidden ${
           fillMobile ? "max-md:min-h-[100svh]" : "max-md:min-h-0 max-md:py-12"
         }`}
       >
-        {children(desktop ? scrollYProgress : idle)}
+        {children(desktop ? safe : idle)}
       </div>
     </section>
   );

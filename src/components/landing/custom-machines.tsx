@@ -159,7 +159,7 @@ export function CustomMachines() {
 
   return (
     <section>
-      <StickyScene id="build" heightClass="h-[200vh]" className="scroll-mt-24">
+      <StickyScene id="build" heightClass="md:h-[200vh]" className="scroll-mt-24">
         {(progress) => <BuildInner progress={progress} />}
       </StickyScene>
 

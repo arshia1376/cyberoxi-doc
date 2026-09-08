@@ -101,7 +101,7 @@ function VaedeInner({ progress }: { progress: MotionValue<number> }) {
 
 export function Vaede() {
   return (
-    <StickyScene id="vaede" heightClass="h-[320vh]">
+    <StickyScene id="vaede" heightClass="md:h-[320vh]">
       {(progress) => <VaedeInner progress={progress} />}
     </StickyScene>
   );

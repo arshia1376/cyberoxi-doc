@@ -58,7 +58,7 @@ export function Company() {
 
   return (
     <section id="company">
-      <StickyScene heightClass="h-[220vh]">
+      <StickyScene heightClass="md:h-[220vh]">
         {(progress) => <CompanyInner progress={progress} />}
       </StickyScene>
 

@@ -51,13 +51,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="fa"
       dir="rtl"
-      className={`${vazir.variable} h-full antialiased`}
+      className={`${vazir.variable} antialiased`}
       suppressHydrationWarning
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: localeBoot }} />
       </head>
-      <body className="min-h-full max-w-full overflow-x-clip font-sans">
+      <body className="min-h-full max-w-full font-sans">
         <LocaleProvider>{children}</LocaleProvider>
       </body>
     </html>

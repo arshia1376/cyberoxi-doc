@@ -102,7 +102,7 @@ function ParkoInner({ progress }: { progress: MotionValue<number> }) {
 
 export function Parko() {
   return (
-    <StickyScene id="parko" heightClass="h-[320vh]">
+    <StickyScene id="parko" heightClass="md:h-[320vh]">
       {(progress) => <ParkoInner progress={progress} />}
     </StickyScene>
   );

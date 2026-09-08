@@ -137,7 +137,7 @@ export function Cta() {
 
   return (
     <section>
-      <StickyScene id="cta" heightClass="h-[240vh]">
+      <StickyScene id="cta" heightClass="md:h-[240vh]">
         {(progress) => <CtaInner progress={progress} />}
       </StickyScene>
       <div className="mx-auto grid max-w-7xl gap-5 px-4 pb-16 sm:px-8 sm:pb-24 md:grid-cols-2 lg:grid-cols-4">

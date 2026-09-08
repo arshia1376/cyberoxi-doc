@@ -110,7 +110,7 @@ export function Zar() {
 
   return (
     <section>
-      <StickyScene id="zar" heightClass="h-[520vh]">
+      <StickyScene id="zar" heightClass="md:h-[520vh]">
         {(progress) => <ZarInner progress={progress} />}
       </StickyScene>
       <div className="mx-auto grid max-w-7xl gap-5 px-4 pb-16 sm:px-8 sm:pb-24 md:grid-cols-3">

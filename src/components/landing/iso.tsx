@@ -50,7 +50,7 @@ export function Iso() {
 
   return (
     <section>
-      <StickyScene id="iso" heightClass="h-[260vh]">
+      <StickyScene id="iso" heightClass="md:h-[260vh]">
         {(progress) => <IsoInner progress={progress} />}
       </StickyScene>
       <div className="mx-auto grid max-w-7xl gap-5 px-4 pb-16 sm:px-8 sm:pb-24 md:grid-cols-2 lg:grid-cols-4">

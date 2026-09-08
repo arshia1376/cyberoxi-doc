@@ -500,7 +500,7 @@ export function Ofogh() {
 
   return (
     <section>
-      <StickyScene id="ofogh" heightClass="h-[240vh]">
+      <StickyScene id="ofogh" heightClass="md:h-[240vh]">
         {(progress) => <OfoghInner progress={progress} />}
       </StickyScene>
       <div className="mx-auto grid max-w-7xl gap-5 px-4 pb-16 sm:px-8 sm:pb-24 md:grid-cols-2 lg:grid-cols-4">

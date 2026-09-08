@@ -42,11 +42,11 @@ function HeroInner({ progress }: { progress: MotionValue<number> }) {
   const markShift = useTransform(progress, [0, 1], reduce ? [0, 0] : [0, -18]);
 
   return (
-    <div className="relative h-full min-h-[100svh] w-full min-w-0 overflow-x-clip md:min-h-0">
+    <div className="relative h-full min-h-[100svh] w-full min-w-0 max-md:overflow-x-clip md:min-h-dvh">
       <HeroFilm progress={progress} />
       <VisionHud progress={progress} pointerX={x} pointerY={y} />
 
-      <div className="relative mx-auto flex h-full min-h-[100svh] w-full min-w-0 max-w-7xl flex-col justify-center overflow-x-clip px-4 pt-24 pb-10 sm:px-8 md:min-h-0 md:pt-0 md:pb-0">
+      <div className="relative mx-auto flex h-full min-h-[100svh] w-full min-w-0 max-w-7xl flex-col justify-center px-4 pt-28 pb-10 sm:px-8 md:min-h-dvh">
         <motion.div
           aria-hidden
           style={{ y: markShift, opacity }}
@@ -94,7 +94,7 @@ function HeroInner({ progress }: { progress: MotionValue<number> }) {
 
 export function Hero() {
   return (
-    <StickyScene id="top" heightClass="h-[240vh]" fillMobile>
+    <StickyScene id="top" heightClass="md:h-[180vh]" fillMobile>
       {(progress) => <HeroInner progress={progress} />}
     </StickyScene>
   );
