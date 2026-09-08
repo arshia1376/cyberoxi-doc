@@ -1,0 +1,9 @@
+.git
+.gitignore
+.next
+node_modules
+*.md
+AGENTS.md
+CLAUDE.md
+.DS_Store
+*.tsbuildinfo

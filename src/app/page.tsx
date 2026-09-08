@@ -1,69 +1,83 @@
-import Image from "next/image";
+import { Background } from "@/components/landing/background";
+import { Callisto } from "@/components/landing/callisto";
+import { Clients } from "@/components/landing/clients";
+import { Company } from "@/components/landing/company";
+import { Contact } from "@/components/landing/contact";
+import { Cta } from "@/components/landing/cta";
+import { CustomMachines } from "@/components/landing/custom-machines";
+import { Footer } from "@/components/landing/footer";
+import { FactoryPitch } from "@/components/landing/factory-pitch";
+import { Header } from "@/components/landing/header";
+import { Hero } from "@/components/landing/hero";
+import { Honors } from "@/components/landing/honors";
+import { Iso } from "@/components/landing/iso";
+import { Ofogh } from "@/components/landing/ofogh";
+import { Parko } from "@/components/landing/parko";
+import { Pegah } from "@/components/landing/pegah";
+import { SoftwareExports } from "@/components/landing/software-exports";
+import { Sport } from "@/components/landing/sport";
+import { Vaede } from "@/components/landing/vaede";
+import { Worlds } from "@/components/landing/worlds";
+import { Zar } from "@/components/landing/zar";
+import { CursorGlow } from "@/components/ui/cursor-glow";
+import { IconBadge, IconMachinery, IconSoftware } from "@/components/ui/icons";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="relative">
+      <Background />
+      <div className="site-noise" />
+      <CursorGlow />
+      <Header />
+      <main>
+        <Hero />
+        <Worlds />
+        <Clients />
+        <div id="software">
+          <section className="px-4 pt-16 sm:px-8 sm:pt-20">
+            <div className="mx-auto max-w-7xl">
+              <IconBadge tone="cyan">
+                <IconSoftware />
+              </IconBadge>
+              <p className="mt-5 text-xs tracking-[0.3em] text-[var(--cyan)]">CHAPTER 01</p>
+              <h2 className="mt-3 text-3xl font-bold sm:text-5xl">دنیای نرم‌افزار</h2>
+            </div>
+          </section>
+          <Parko />
+          <Vaede />
+          <Cta />
+          <Ofogh />
+          <SoftwareExports />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <div id="machinery">
+          <section className="px-4 pt-16 sm:px-8 sm:pt-20">
+            <div className="mx-auto max-w-7xl">
+              <IconBadge>
+                <IconMachinery />
+              </IconBadge>
+              <p className="mt-5 text-xs tracking-[0.3em] text-[var(--gold)]">CHAPTER 02</p>
+              <h2 className="mt-3 text-3xl font-bold sm:text-5xl">دنیای ماشین‌سازی</h2>
+              <p className="mt-4 max-w-2xl leading-8 text-[var(--muted)]">
+                کالیستو، زر و پگاه در تولیدند.{" "}
+                <a href="#build" className="text-[var(--gold)] hover:text-[var(--ink)]">
+                  برای خط شما هم ماشین کاستوم می‌سازیم.
+                </a>
+              </p>
+            </div>
+          </section>
+          <Callisto />
+          <Zar />
+          <Pegah />
+          <CustomMachines />
+          <Honors />
         </div>
+        <Sport />
+        <Company />
+        <Iso />
+        <FactoryPitch />
+        <Contact />
       </main>
+      <Footer />
     </div>
   );
 }

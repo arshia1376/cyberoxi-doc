@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 72" role="img" aria-labelledby="ofoghTitle">
+  <title id="ofoghTitle">افق کوروش</title>
+  <text
+    x="160"
+    y="40"
+    text-anchor="middle"
+    font-family="Tahoma, Arial, sans-serif"
+    font-size="26"
+    font-weight="700"
+    fill="#f4efe6"
+  >افق کوروش</text>
+  <line x1="48" y1="54" x2="140" y2="54" stroke="#e0b15a" stroke-width="1.25" />
+  <circle cx="160" cy="54" r="4.2" fill="none" stroke="#5eead4" stroke-width="1.25" />
+  <circle cx="160" cy="54" r="1.5" fill="#e0b15a" />
+  <line x1="180" y1="54" x2="272" y2="54" stroke="#e0b15a" stroke-width="1.25" />
+</svg>
