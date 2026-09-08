@@ -37,26 +37,25 @@ function HeroInner({ progress }: { progress: MotionValue<number> }) {
   const { x, y } = usePointerField();
   const scale = useTransform(progress, [0, 1], reduce ? [1, 1] : [1.04, 0.94]);
   const opacity = useTransform(progress, [0, 0.74, 1], [1, 1, 0]);
-  const sub = useTransform(progress, [0.08, 0.36], reduce ? [1, 1] : [0, 1]);
   const markShift = useTransform(progress, [0, 1], reduce ? [0, 0] : [0, -18]);
 
   return (
-    <div className="relative h-full w-full">
+    <div className="relative h-full min-h-[100svh] w-full md:min-h-0">
       <HeroFilm progress={progress} />
       <VisionHud progress={progress} pointerX={x} pointerY={y} />
 
-      <div className="relative mx-auto flex h-full w-full max-w-7xl flex-col justify-center px-4 sm:px-8">
+      <div className="relative mx-auto flex h-full min-h-[100svh] w-full max-w-7xl flex-col justify-center px-4 pt-24 pb-10 sm:px-8 md:min-h-0 md:pt-0 md:pb-0">
         <motion.div
           aria-hidden
           style={{ y: markShift, opacity }}
-          className="pointer-events-none absolute top-[18%] left-[4%] hidden lg:block"
+          className="pointer-events-none mb-6 self-end lg:absolute lg:top-[18%] lg:left-[4%] lg:mb-0 lg:self-auto"
         >
-          <HeroFlameMark className="h-36 w-36" />
+          <HeroFlameMark className="h-24 w-24 sm:h-28 sm:w-28 lg:h-36 lg:w-36" />
         </motion.div>
 
         <motion.p
-          style={{ opacity: sub }}
-          className="mb-8 text-xs tracking-[0.42em] text-[var(--gold)]"
+          style={{ opacity }}
+          className="mb-5 text-xs tracking-[0.42em] text-[var(--gold)] sm:mb-8"
         >
           KNOWLEDGE-BASED · MACHINE VISION
         </motion.p>
@@ -64,17 +63,28 @@ function HeroInner({ progress }: { progress: MotionValue<number> }) {
           <HeroWordmark pointerX={x} pointerY={y} />
         </motion.div>
         <motion.h1
-          style={{ opacity: sub }}
-          className="mt-6 max-w-3xl text-2xl font-medium text-[var(--ink)] sm:text-3xl lg:text-5xl"
+          style={{ opacity }}
+          className="mt-5 max-w-3xl text-2xl font-medium text-[var(--ink)] sm:mt-6 sm:text-3xl lg:text-5xl"
         >
           {company.legalName}
         </motion.h1>
         <motion.p
-          style={{ opacity: sub }}
-          className="mt-5 max-w-2xl text-base leading-8 text-[var(--muted)] sm:mt-6 sm:text-lg sm:leading-9 lg:text-xl"
+          style={{ opacity }}
+          className="mt-4 max-w-2xl text-base leading-8 text-[var(--muted)] sm:mt-6 sm:text-lg sm:leading-9 lg:text-xl"
         >
           {company.tagline}. {company.description}
         </motion.p>
+        <motion.div style={{ opacity }} className="mt-8 flex flex-wrap items-center gap-3 sm:mt-10">
+          <a
+            href="#worlds"
+            className="rounded-full bg-[var(--gold)] px-5 py-2.5 text-sm font-semibold text-[#1a1408]"
+          >
+            دو دنیا
+          </a>
+          <a href="#contact" className="text-sm text-[var(--muted)] hover:text-[var(--gold)]">
+            گفت‌وگو با مجموعه
+          </a>
+        </motion.div>
       </div>
     </div>
   );
@@ -82,7 +92,7 @@ function HeroInner({ progress }: { progress: MotionValue<number> }) {
 
 export function Hero() {
   return (
-    <StickyScene id="top" heightClass="h-[240vh]">
+    <StickyScene id="top" heightClass="h-[240vh]" fillMobile>
       {(progress) => <HeroInner progress={progress} />}
     </StickyScene>
   );

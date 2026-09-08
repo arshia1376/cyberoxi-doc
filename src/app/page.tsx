@@ -1,5 +1,6 @@
 import { Background } from "@/components/landing/background";
 import { Callisto } from "@/components/landing/callisto";
+import { Automation } from "@/components/landing/automation";
 import { Clients } from "@/components/landing/clients";
 import { Company } from "@/components/landing/company";
 import { Contact } from "@/components/landing/contact";
@@ -69,6 +70,7 @@ export default function Home() {
           <Zar />
           <Pegah />
           <CustomMachines />
+          <Automation />
           <Honors />
         </div>
         <Sport />

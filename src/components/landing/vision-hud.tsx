@@ -91,7 +91,7 @@ export function VisionHud({
     <motion.div
       aria-hidden
       style={{ opacity: fade }}
-      className="pointer-events-none absolute inset-0 hidden lg:block"
+      className="pointer-events-none absolute inset-0 max-lg:opacity-45"
     >
       <div className="vision-reticle" />
       <div className="vision-scanline" />

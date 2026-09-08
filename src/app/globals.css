@@ -817,6 +817,145 @@ a {
   filter: brightness(0) invert(1);
 }
 
+.labor-stage {
+  aspect-ratio: 16 / 11;
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(ellipse at 70% 40%, rgba(224, 177, 90, 0.16), transparent 55%),
+    linear-gradient(180deg, rgba(12, 16, 24, 0.92), rgba(7, 8, 13, 0.96));
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.45);
+}
+
+.labor-grid {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.35;
+  background-image:
+    linear-gradient(rgba(94, 234, 212, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(94, 234, 212, 0.08) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.labor-scan {
+  pointer-events: none;
+  position: absolute;
+  inset-inline: 8%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  animation: labor-scan 4.2s var(--ease) infinite;
+}
+
+.labor-human {
+  transform-origin: 50% 100%;
+  animation: labor-fade 5.6s var(--ease) infinite;
+}
+
+.labor-human-1 {
+  animation-delay: 0.45s;
+}
+
+.labor-human-2 {
+  animation-delay: 0.9s;
+}
+
+.labor-human-3 {
+  animation-delay: 1.35s;
+}
+
+.labor-bot {
+  animation: labor-bot 5.6s var(--ease) infinite;
+}
+
+.labor-belt {
+  height: 8px;
+  border-radius: 9999px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(224, 177, 90, 0.45) 0 12px,
+      rgba(10, 12, 18, 0.8) 12px 22px
+    );
+  animation: labor-belt 1.4s linear infinite;
+}
+
+.labor-pulse {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 9999px;
+  background: var(--cyan);
+  box-shadow: 0 0 12px rgba(94, 234, 212, 0.8);
+  animation: labor-dot 2.2s ease-in-out infinite;
+}
+
+@keyframes labor-scan {
+  0% {
+    top: 18%;
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    top: 78%;
+    opacity: 0.2;
+  }
+}
+
+@keyframes labor-fade {
+  0%,
+  18% {
+    opacity: 0.85;
+    transform: translateY(0) scale(1);
+  }
+  42%,
+  72% {
+    opacity: 0.08;
+    transform: translateY(10px) scale(0.86);
+  }
+  100% {
+    opacity: 0.85;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes labor-bot {
+  0%,
+  18% {
+    transform: scale(0.92);
+    filter: saturate(0.7);
+  }
+  42%,
+  100% {
+    transform: scale(1);
+    filter: saturate(1.15) drop-shadow(0 0 18px rgba(224, 177, 90, 0.35));
+  }
+}
+
+@keyframes labor-belt {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 22px 0;
+  }
+}
+
+@keyframes labor-dot {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
 @media (min-width: 768px) {
   .hero-letters {
     font-size: clamp(2.6rem, 6.4vw, 5.8rem);
@@ -874,7 +1013,12 @@ a {
   .racket-swing,
   .sport-impact,
   .sport-trail,
-  .sport-card-shuttle {
+  .sport-card-shuttle,
+  .labor-scan,
+  .labor-human,
+  .labor-bot,
+  .labor-belt,
+  .labor-pulse {
     animation: none !important;
   }
 

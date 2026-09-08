@@ -186,16 +186,13 @@ function WorldCard({
 
 function WorldsInner({ progress }: { progress: MotionValue<number> }) {
   const reduce = useReducedMotion();
-  const copy = useTransform(progress, [0.06, 0.28], reduce ? [1, 1] : [0, 1]);
 
   return (
-    <div className="mx-auto flex h-full w-full max-w-7xl flex-col justify-center gap-6 px-4 sm:px-8">
+    <div className="mx-auto flex h-full w-full max-w-7xl flex-col justify-center gap-6 px-4 max-md:justify-start sm:px-8">
       <div className="max-w-3xl">
         <p className="text-xs tracking-[0.3em] text-[var(--gold)]">{worlds.kicker}</p>
         <h2 className="mt-3 text-3xl font-bold sm:text-5xl">{worlds.title}</h2>
-        <motion.p style={{ opacity: copy }} className="mt-4 max-w-2xl leading-8 text-[var(--muted)]">
-          {worlds.fusion}
-        </motion.p>
+        <p className="mt-4 max-w-2xl leading-8 text-[var(--muted)]">{worlds.fusion}</p>
       </div>
 
       <div className="device-stage grid gap-5 lg:grid-cols-2">

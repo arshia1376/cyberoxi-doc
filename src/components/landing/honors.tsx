@@ -41,7 +41,7 @@ export function Honors() {
         <div className="mt-8">
           <p className="text-xs tracking-[0.3em] text-[var(--gold)]">VOICE · LEADERSHIP</p>
           <h3 className="mt-3 text-3xl font-bold">از زبان مدیران</h3>
-          <div className="mt-8 grid gap-6 lg:grid-cols-2">
+          <div className="mt-8 grid gap-6 md:grid-cols-2">
             {leadershipQuotes.map((item, index) => (
               <Reveal key={item.name} delay={index * 0.08}>
                 <blockquote className="glass relative overflow-hidden rounded-[1.8rem] p-7 sm:p-8">
