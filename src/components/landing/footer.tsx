@@ -1,8 +1,12 @@
+"use client";
+
 import { BrandLockup } from "@/components/brand/logo";
-import { company } from "@/data/site";
 import { IconMail } from "@/components/ui/icons";
+import { useContent } from "@/i18n/content";
 
 export function Footer() {
+  const { company } = useContent();
+
   return (
     <footer className="px-4 pb-10 sm:px-8">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-5 border-t border-[var(--line)] pt-8 sm:flex-row">
@@ -11,7 +15,7 @@ export function Footer() {
           {company.people.map((person) => (
             <a key={person.tel} href={`tel:${person.tel}`} className="hover:text-[var(--gold)]">
               {person.role}
-              <span className="mr-2" dir="ltr">
+              <span className="ms-2" dir="ltr">
                 {person.phone}
               </span>
             </a>

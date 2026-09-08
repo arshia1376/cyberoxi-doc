@@ -1,12 +1,10 @@
 "use client";
 
 import { useReducedMotion } from "motion/react";
-import { sport } from "@/data/site";
+import { useContent } from "@/i18n/content";
 import { IconBadge, IconShuttle } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/reveal";
 import { ViewHotspot } from "@/components/ui/lightbox";
-
-const trophyFrames = [{ src: sport.trophy.src, label: sport.trophy.caption }];
 
 function ShuttleMark({ className }: { className?: string }) {
   return (
@@ -88,6 +86,9 @@ function RallyStage() {
 }
 
 export function Sport() {
+  const { sport, ui } = useContent();
+  const trophyFrames = [{ src: sport.trophy.src, label: sport.trophy.caption }];
+
   return (
     <section id="sport" className="relative overflow-hidden scroll-mt-28 px-4 py-16 sm:px-8 sm:py-24">
       <div className="sport-haze" />
@@ -103,14 +104,14 @@ export function Sport() {
         </Reveal>
 
         <div className="mt-12 grid items-center gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
-          <Reveal delay={0.08} className="order-2 lg:order-1">
+          <Reveal delay={0.08} className="order-2 min-w-0 lg:order-1">
             <RallyStage />
             <p className="mt-4 text-center text-xs tracking-[0.22em] text-[var(--gold)]">
-              رالی بدمینتون · لیگ استان و دسته یک کشور
+              {ui.sportRally}
             </p>
           </Reveal>
 
-          <Reveal delay={0.14} className="order-1 lg:order-2">
+          <Reveal delay={0.14} className="order-1 min-w-0 lg:order-2">
             <article className="glass overflow-hidden rounded-[1.8rem]">
               <div className="device-frame relative aspect-[3/4]">
                 <img
@@ -123,8 +124,8 @@ export function Sport() {
                 <ViewHotspot items={trophyFrames} />
               </div>
               <div className="p-6">
-                <p className="text-xs tracking-[0.28em] text-[var(--gold)]">TROPHY · ۱۴۰۲</p>
-                <h3 className="mt-3 text-2xl font-bold">جام مقام سوم استان</h3>
+                <p className="text-xs tracking-[0.28em] text-[var(--gold)]">{ui.sportTrophyKicker}</p>
+                <h3 className="mt-3 text-2xl font-bold">{ui.sportTrophyTitle}</h3>
                 <p className="mt-3 leading-8 text-[var(--muted)]">{sport.trophy.caption}</p>
               </div>
             </article>
@@ -134,7 +135,7 @@ export function Sport() {
         <div className="mt-10 grid gap-6 md:grid-cols-2">
           {sport.leagues.map((league, index) => (
             <Reveal key={league.title} delay={0.1 + index * 0.08}>
-              <article className="glass relative overflow-hidden rounded-[1.8rem] p-7">
+              <article className="glass relative min-w-0 overflow-hidden rounded-[1.8rem] p-7">
                 <span className="sport-card-shuttle" aria-hidden>
                   <ShuttleMark className="h-12 w-9" />
                 </span>

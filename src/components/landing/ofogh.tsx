@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion, useTransform, type MotionValue } from "motion/react";
 import { useEffect, useState } from "react";
-import { ofogh } from "@/data/site";
+import { useContent } from "@/i18n/content";
 import { Reveal } from "@/components/ui/reveal";
 import { StickyScene } from "@/components/ui/sticky-scene";
 import { IconCamera, IconCheck, IconFire, IconShield } from "@/components/ui/icons";
@@ -310,6 +310,8 @@ function AlarmWave({ tone, active }: { tone: "fire" | "theft"; active: boolean }
 }
 
 function ClassifyHud({ mode }: { mode: VisionMode }) {
+  const { ui } = useContent();
+
   return (
     <motion.div
       aria-hidden
@@ -320,11 +322,11 @@ function ClassifyHud({ mode }: { mode: VisionMode }) {
     >
       <div className="text-center">
         <p className="text-[0.65rem] tracking-[0.32em] text-[var(--gold)]">VISION · INFERENCE</p>
-        <p className="mt-2 text-sm text-[var(--ink)]">طبقه‌بندی رخداد</p>
+        <p className="mt-2 text-sm text-[var(--ink)]">{ui.ofoghClassify}</p>
         <div className="mt-4 flex items-center justify-center gap-6">
-          <span className="text-xs tracking-[0.14em] text-[#ff6b3d]">آتش‌سوزی</span>
+          <span className="text-xs tracking-[0.14em] text-[#ff6b3d]">{ui.ofoghFire}</span>
           <span className="h-px w-10 bg-[var(--line)]" />
-          <span className="text-xs tracking-[0.14em] text-[var(--cyan)]">دزدی</span>
+          <span className="text-xs tracking-[0.14em] text-[var(--cyan)]">{ui.ofoghTheft}</span>
         </div>
       </div>
     </motion.div>
@@ -340,6 +342,7 @@ function StoreOpsPanel({
   mode: VisionMode;
   reduce: boolean | null;
 }) {
+  const { ui } = useContent();
   const tiltX = useTransform(progress, [0, 1], reduce ? [0, 0] : [12, -10]);
   const tiltY = useTransform(progress, [0, 1], reduce ? [0, 0] : [-10, 12]);
   const scale = useTransform(progress, [0, 1], reduce ? [1, 1] : [0.92, 1.04]);
@@ -351,7 +354,7 @@ function StoreOpsPanel({
       style={{ rotateX: tiltX, rotateY: tiltY, scale, transformPerspective: 1600 }}
       className="device-frame relative aspect-[16/11] overflow-hidden lg:aspect-[4/5]"
       role="img"
-      aria-label="نمای سینمایی سامانه بینایی فروشگاه: دوربین‌ها، تشخیص آتش‌سوزی و دزدی، آلارم جداگانه"
+      aria-label={ui.ofoghAria}
     >
       <div className="absolute inset-0 bg-[#07090f]" />
       <div
@@ -373,11 +376,11 @@ function StoreOpsPanel({
 
       <div className="absolute inset-x-4 top-12 bottom-[5.6rem]">
         <div className="grid h-full grid-cols-2 grid-rows-2 gap-2.5">
-          <CamTile cam="CAM-04" label="راهرو A" kind="aisle" mode={mode} reduce={reduce} alert={null} />
-          <CamTile cam="CAM-12" label="صندوق" kind="checkout" mode={mode} reduce={reduce} alert={null} />
+          <CamTile cam="CAM-04" label={ui.ofoghAisle} kind="aisle" mode={mode} reduce={reduce} alert={null} />
+          <CamTile cam="CAM-12" label={ui.ofoghCheckout} kind="checkout" mode={mode} reduce={reduce} alert={null} />
           <CamTile
             cam="CAM-21"
-            label="انبار"
+            label={ui.ofoghStock}
             kind="stock"
             mode={mode}
             reduce={reduce}
@@ -385,7 +388,7 @@ function StoreOpsPanel({
           />
           <CamTile
             cam="CAM-33"
-            label="دالان"
+            label={ui.ofoghCorridor}
             kind="corridor"
             mode={mode}
             reduce={reduce}
@@ -402,7 +405,7 @@ function StoreOpsPanel({
           }`}
         >
           <div className="flex items-center justify-between">
-            <p className="text-[0.65rem] tracking-[0.18em] text-[#ff6b3d]">آتش‌سوزی</p>
+            <p className="text-[0.65rem] tracking-[0.18em] text-[#ff6b3d]">{ui.ofoghFire}</p>
             <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 text-[#ff6b3d]" fill="none" aria-hidden>
               <path
                 d="M12 3c1.5 3 1 5-1 7 3 .2 5 2.2 5 5a6 6 0 1 1-12 0c0-3.4 2.4-6.2 4-8 0 2 1 3.4 2 4-1.5-3 .2-5.8 2-8Z"
@@ -419,7 +422,7 @@ function StoreOpsPanel({
           }`}
         >
           <div className="flex items-center justify-between">
-            <p className="text-[0.65rem] tracking-[0.18em] text-[var(--cyan)]">دزدی</p>
+            <p className="text-[0.65rem] tracking-[0.18em] text-[var(--cyan)]">{ui.ofoghTheft}</p>
             <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 text-[var(--gold)]" fill="none" aria-hidden>
               <path d="M12 4v4M12 16v4M4 12h4M16 12h4" stroke="currentColor" strokeWidth="1.4" />
               <circle cx="12" cy="12" r="3.2" stroke="currentColor" strokeWidth="1.4" />
@@ -433,16 +436,17 @@ function StoreOpsPanel({
 }
 
 function OfoghInner({ progress }: { progress: MotionValue<number> }) {
+  const { ofogh, ui } = useContent();
   const reduce = useReducedMotion();
   const mode = useVisionCycle(reduce);
   const copy = useTransform(progress, [0.08, 0.32], reduce ? [1, 1] : [0, 1]);
 
   return (
     <div className="mx-auto grid h-full w-full max-w-7xl items-center gap-8 px-4 sm:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-12">
-      <div>
+      <div className="min-w-0">
         <img
           src="/clients/ofogh.png"
-          alt="فروشگاه‌های زنجیره‌ای افق کوروش"
+          alt={ui.ofoghLogoAlt}
           className="h-12 w-auto rounded-lg sm:h-14"
         />
         <p className="mt-5 text-xs tracking-[0.3em] text-[var(--cyan)]">{ofogh.kicker}</p>
@@ -492,6 +496,8 @@ function OfoghInner({ progress }: { progress: MotionValue<number> }) {
 }
 
 export function Ofogh() {
+  const { ofogh } = useContent();
+
   return (
     <section>
       <StickyScene id="ofogh" heightClass="h-[240vh]">
@@ -500,7 +506,7 @@ export function Ofogh() {
       <div className="mx-auto grid max-w-7xl gap-5 px-4 pb-16 sm:px-8 sm:pb-24 md:grid-cols-2 lg:grid-cols-4">
         {ofogh.pillars.map((pillar) => (
           <Reveal key={pillar.title}>
-            <article className="glass h-full rounded-[1.6rem] p-6">
+            <article className="glass h-full min-w-0 rounded-[1.6rem] p-6">
               <p className="text-xs tracking-[0.22em] text-[var(--gold)]">{pillar.kicker}</p>
               <h3 className="mt-3 text-xl font-bold">{pillar.title}</h3>
               <p className="mt-3 leading-8 text-[var(--muted)]">{pillar.body}</p>

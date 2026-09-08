@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Vazirmatn } from "next/font/google";
+import { LocaleProvider } from "@/i18n/locale";
 import "./globals.css";
 
 const vazir = Vazirmatn({
@@ -37,14 +38,28 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+};
+
+const localeBoot = `(function(){try{var l=localStorage.getItem("cyberoxi-lang");if(l==="en"){var d=document.documentElement;d.lang="en";d.dir="ltr";d.classList.add("locale-en");}}catch(e){}})();`;
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="fa"
       dir="rtl"
       className={`${vazir.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full font-sans">{children}</body>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: localeBoot }} />
+      </head>
+      <body className="min-h-full max-w-full overflow-x-clip font-sans">
+        <LocaleProvider>{children}</LocaleProvider>
+      </body>
     </html>
   );
 }

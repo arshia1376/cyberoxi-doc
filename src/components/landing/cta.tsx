@@ -1,11 +1,12 @@
 "use client";
 
 import { motion, useReducedMotion, useTransform, type MotionValue } from "motion/react";
-import { cta } from "@/data/site";
+import { useContent } from "@/i18n/content";
 import { Reveal } from "@/components/ui/reveal";
 import { StickyScene } from "@/components/ui/sticky-scene";
 
 function ClassifiedPanel({ progress }: { progress: MotionValue<number> }) {
+  const { cta } = useContent();
   const reduce = useReducedMotion();
   const tiltX = useTransform(progress, [0, 1], reduce ? [0, 0] : [12, -10]);
   const tiltY = useTransform(progress, [0, 1], reduce ? [0, 0] : [-10, 12]);
@@ -89,12 +90,13 @@ function ClassifiedPanel({ progress }: { progress: MotionValue<number> }) {
 }
 
 function CtaInner({ progress }: { progress: MotionValue<number> }) {
+  const { cta } = useContent();
   const reduce = useReducedMotion();
   const copy = useTransform(progress, [0.08, 0.32], reduce ? [1, 1] : [0, 1]);
 
   return (
     <div className="mx-auto grid h-full w-full max-w-7xl items-center gap-8 px-4 sm:px-8 lg:grid-cols-[0.95fr_1.05fr]">
-      <div>
+      <div className="min-w-0">
         <p className="text-xs tracking-[0.3em] text-[var(--cyan)]">{cta.kicker}</p>
         <h2 className="mt-4 text-4xl font-bold sm:text-5xl">{cta.title}</h2>
         <p className="mt-2 text-[var(--gold)]">{cta.product}</p>
@@ -131,6 +133,8 @@ function CtaInner({ progress }: { progress: MotionValue<number> }) {
 }
 
 export function Cta() {
+  const { cta } = useContent();
+
   return (
     <section>
       <StickyScene id="cta" heightClass="h-[240vh]">
@@ -139,7 +143,7 @@ export function Cta() {
       <div className="mx-auto grid max-w-7xl gap-5 px-4 pb-16 sm:px-8 sm:pb-24 md:grid-cols-2 lg:grid-cols-4">
         {cta.pillars.map((pillar) => (
           <Reveal key={pillar.title}>
-            <article className="glass h-full rounded-[1.6rem] p-6">
+            <article className="glass h-full min-w-0 rounded-[1.6rem] p-6">
               <p className="text-xs tracking-[0.22em] text-[var(--gold)]">{pillar.kicker}</p>
               <h3 className="mt-3 text-xl font-bold">{pillar.title}</h3>
               <p className="mt-3 leading-8 text-[var(--muted)]">{pillar.body}</p>

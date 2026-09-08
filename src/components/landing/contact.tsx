@@ -1,24 +1,26 @@
-import { company } from "@/data/site";
+"use client";
+
 import { IconMail, IconPhone } from "@/components/ui/icons";
+import { useContent } from "@/i18n/content";
 
 export function Contact() {
+  const { company, ui } = useContent();
+
   return (
     <section id="contact" className="px-4 py-16 sm:px-8 sm:py-24">
       <div className="glass relative mx-auto max-w-7xl overflow-hidden rounded-[1.8rem] px-5 py-12 sm:rounded-[2.2rem] sm:px-8 sm:py-16">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(224,177,90,0.16),transparent_55%)]" />
         <div className="relative text-center">
           <p className="text-xs tracking-[0.3em] text-[var(--gold)]">CONTACT</p>
-          <h2 className="mt-4 text-3xl font-bold sm:text-4xl">گفت‌وگو با مجموعه</h2>
-          <p className="mx-auto mt-4 max-w-xl leading-8 text-[var(--muted)]">
-            برای ماشین کاستوم، نرم‌افزار دستگاه، یا سامانه عملیاتی — مستقیم با مدیرعامل یا رئیس هیئت‌مدیره در تماس باشید.
-          </p>
+          <h2 className="mt-4 text-3xl font-bold sm:text-4xl">{ui.contactTitle}</h2>
+          <p className="mx-auto mt-4 max-w-xl leading-8 text-[var(--muted)]">{ui.contactLead}</p>
         </div>
         <div className="relative mx-auto mt-10 grid max-w-3xl gap-4 sm:grid-cols-2">
           {company.people.map((person) => (
             <a
               key={person.tel}
               href={`tel:${person.tel}`}
-              className="glass rounded-2xl px-6 py-6 text-right transition hover:border-[var(--gold)]/40"
+              className="glass rounded-2xl px-6 py-6 text-start transition hover:border-[var(--gold)]/40"
             >
               <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-[var(--gold)]/25 bg-[rgba(224,177,90,0.1)] text-[var(--gold)]">
                 <IconPhone />
@@ -44,7 +46,7 @@ export function Contact() {
           </a>
           <span aria-hidden>·</span>
           <a href={company.tour} target="_blank" rel="noreferrer" className="hover:text-[var(--gold)]">
-            تور مجازی کارخانه
+            {ui.factoryTour}
           </a>
         </div>
       </div>

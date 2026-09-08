@@ -1,12 +1,13 @@
 "use client";
 
 import { motion, useReducedMotion, useTransform, type MotionValue } from "motion/react";
-import { callisto, customMachines, zar } from "@/data/site";
+import { useContent } from "@/i18n/content";
 import { Reveal } from "@/components/ui/reveal";
 import { StickyScene } from "@/components/ui/sticky-scene";
 import { IconClock, IconLayers, IconUsers } from "@/components/ui/icons";
 
 function BuildInner({ progress }: { progress: MotionValue<number> }) {
+  const { customMachines, callisto, ui } = useContent();
   const reduce = useReducedMotion();
   const copy = useTransform(progress, [0.06, 0.28], reduce ? [1, 1] : [0, 1]);
   const shift = useTransform(progress, [0, 1], reduce ? [0, 0] : [28, -18]);
@@ -14,20 +15,20 @@ function BuildInner({ progress }: { progress: MotionValue<number> }) {
 
   return (
     <div className="mx-auto grid h-full w-full max-w-7xl items-center gap-8 px-4 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
-      <div>
+      <div className="min-w-0">
         <p className="text-xs tracking-[0.3em] text-[var(--gold)]">{customMachines.kicker}</p>
         <h2 className="mt-4 text-4xl font-bold sm:text-5xl">{customMachines.title}</h2>
         <p className="mt-2 text-[var(--cyan)]">
           <a href="#custom-ai" className="hover:text-[var(--ink)]">
-            ماشین کاستوم
+            {ui.buildCustom}
           </a>
           {" · "}
           <a href="#device-os" className="hover:text-[var(--ink)]">
-            نرم‌افزار دستگاه
+            {ui.buildOs}
           </a>
           {" · "}
           <a href="#support" className="hover:text-[var(--ink)]">
-            پشتیبانی و ضمانت
+            {ui.buildSupport}
           </a>
         </p>
         <p className="mt-4 max-w-xl leading-8 text-[var(--muted)]">{customMachines.lead}</p>
@@ -39,13 +40,13 @@ function BuildInner({ progress }: { progress: MotionValue<number> }) {
             {customMachines.cta}
           </a>
           <a href="#callisto" className="text-sm text-[var(--muted)] hover:text-[var(--gold)]">
-            کالیستو · سحر
+            {ui.buildCallisto}
           </a>
           <a href="#zar" className="text-sm text-[var(--muted)] hover:text-[var(--gold)]">
-            توزین · زر
+            {ui.buildZar}
           </a>
           <a href="#pegah" className="text-sm text-[var(--muted)] hover:text-[var(--gold)]">
-            توزین · پگاه
+            {ui.buildPegah}
           </a>
         </motion.div>
       </div>
@@ -65,7 +66,7 @@ function BuildInner({ progress }: { progress: MotionValue<number> }) {
             />
           </a>
           <p className="mt-4 text-center text-xs tracking-[0.18em] text-[var(--gold)]">
-            {customMachines.proof} · کالیستو
+            {ui.buildProofCallisto}
           </p>
         </motion.div>
       </div>
@@ -77,14 +78,16 @@ function OfferingCard({
   offering,
   featured,
 }: {
-  offering: (typeof customMachines.offerings)[number];
+  offering: ReturnType<typeof useContent>["customMachines"]["offerings"][number];
   featured?: boolean;
 }) {
+  const { customMachines, zar, ui } = useContent();
+
   return (
     <Reveal>
       <article id={offering.id} className="glass scroll-mt-28 overflow-hidden rounded-[1.8rem]">
         <div className={`grid items-stretch ${featured ? "lg:grid-cols-[1.05fr_0.95fr]" : "lg:grid-cols-2"}`}>
-          <div className="p-7 sm:p-10">
+          <div className="min-w-0 p-7 sm:p-10">
             <div className="flex items-baseline justify-between gap-4">
               <p className="text-xs tracking-[0.28em] text-[var(--gold)]">{offering.kicker}</p>
               <p className="text-sm tracking-[0.2em] text-[var(--muted)]">{offering.index}</p>
@@ -110,7 +113,7 @@ function OfferingCard({
           </div>
 
           {featured ? (
-            <div className="relative border-t border-[var(--line)] p-7 sm:p-10 lg:border-t-0 lg:border-r">
+            <div className="relative min-w-0 border-t border-[var(--line)] p-7 sm:p-10 lg:border-t-0 lg:border-r">
               <div className="device-stage">
                 <div className="device-frame aspect-[16/10]" style={{ transform: "rotateY(-8deg) rotateX(5deg)" }}>
                   <img
@@ -121,15 +124,15 @@ function OfferingCard({
                 </div>
               </div>
               <p className="mt-5 text-center text-xs tracking-[0.18em] text-[var(--gold)]">
-                {customMachines.proof} · زر
+                {ui.buildProofZar}
               </p>
               <p className="mt-3 text-center text-sm leading-7 text-[var(--muted)]">
-                سخت‌افزار و نرم‌افزار یکی؛ همان الگو را برای خط شما تکرار می‌کنیم.
+                {ui.buildSamePattern}
               </p>
             </div>
           ) : (
             <div
-              className={`border-t border-[var(--line)] p-7 sm:p-10 lg:border-t-0 lg:border-r ${
+              className={`min-w-0 border-t border-[var(--line)] p-7 sm:p-10 lg:border-t-0 lg:border-r ${
                 offering.id === "device-os"
                   ? "bg-[radial-gradient(circle_at_top,rgba(94,234,212,0.14),transparent_58%)]"
                   : "bg-[radial-gradient(circle_at_top,rgba(224,177,90,0.12),transparent_58%)]"
@@ -151,6 +154,7 @@ function OfferingCard({
 }
 
 export function CustomMachines() {
+  const { customMachines } = useContent();
   const [machine, software, support] = customMachines.offerings;
 
   return (

@@ -24,15 +24,38 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100%;
+  width: 100%;
 }
 
 body {
   margin: 0;
   min-height: 100%;
+  width: 100%;
+  max-width: 100%;
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font-vazir), Tahoma, sans-serif;
   overflow-x: hidden;
+  position: relative;
+}
+
+img,
+video,
+svg,
+canvas {
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+li {
+  overflow-wrap: break-word;
+  max-width: 100%;
 }
 
 ::selection {
@@ -110,6 +133,28 @@ a {
 
 .marquee-track {
   animation: marquee 48s linear infinite;
+}
+
+.family-track {
+  animation: marquee 70s linear infinite;
+}
+
+.family-track:hover {
+  animation-play-state: paused;
+}
+
+.family-shot {
+  width: 11.5rem;
+  height: 6.4rem;
+  border: 1px solid var(--line);
+  background: #0b0d12;
+}
+
+.family-shot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .gold-text {
@@ -216,6 +261,8 @@ a {
 }
 
 .device-stage {
+  max-width: 100%;
+  min-width: 0;
   perspective: 1600px;
   transform-style: preserve-3d;
 }
@@ -240,14 +287,21 @@ a {
   display: inline-flex;
   flex-direction: column;
   align-items: flex-end;
+  max-width: 100%;
+  overflow: hidden;
   perspective: 1400px;
   color: #f4efe6;
 }
 
+[dir="ltr"] .hero-wordmark {
+  align-items: flex-start;
+}
+
 .hero-arch {
   width: min(72vw, 760px);
+  max-width: 100%;
   height: auto;
-  overflow: visible;
+  overflow: hidden;
   margin-bottom: -0.35em;
 }
 
@@ -465,10 +519,13 @@ a {
 
 .data-glyph {
   position: absolute;
+  max-width: 40%;
+  overflow: hidden;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: 10px;
   letter-spacing: 0.28em;
   color: rgba(244, 239, 230, 0.55);
+  white-space: nowrap;
 }
 
 @keyframes iris-pulse {
@@ -969,8 +1026,34 @@ a {
     box-shadow: 0 20px 44px rgba(0, 0, 0, 0.42);
   }
 
+  .device-stage {
+    perspective: none;
+    transform-style: flat;
+  }
+
   .hero-arch {
-    width: min(92vw, 760px);
+    width: min(86vw, 760px);
+  }
+
+  .hero-letters {
+    font-size: clamp(1.15rem, 7vw, 1.9rem);
+    letter-spacing: 0.02em;
+    gap: 0.02em;
+    max-width: 100%;
+  }
+
+  .data-glyph {
+    letter-spacing: 0.06em;
+    font-size: 8px;
+  }
+
+  .alpr-box {
+    width: 132px;
+    height: 84px;
+  }
+
+  .text-xs[class*="tracking-\[0."] {
+    letter-spacing: 0.08em;
   }
 
   .view-hotspot {
@@ -991,6 +1074,7 @@ a {
   }
 
   .marquee-track,
+  .family-track,
   .orb,
   .gold-text,
   .hero-iris-ring-a,

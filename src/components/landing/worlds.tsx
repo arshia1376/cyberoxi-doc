@@ -1,9 +1,9 @@
 "use client";
 
 import { motion, useReducedMotion, useTransform, type MotionValue } from "motion/react";
-import { worlds } from "@/data/site";
-import { StickyScene } from "@/components/ui/sticky-scene";
+import { StickyScene, useDesktopSticky } from "@/components/ui/sticky-scene";
 import { IconMachinery, IconSoftware } from "@/components/ui/icons";
+import { useContent } from "@/i18n/content";
 
 function SoftwareHud({ progress, reduce }: { progress: MotionValue<number>; reduce: boolean | null }) {
   const scan = useTransform(progress, [0, 1], reduce ? ["22%", "22%"] : ["10%", "82%"]);
@@ -152,16 +152,20 @@ function WorldCard({
   return (
     <motion.a
       href={href}
-      style={{ rotateX: tiltX, rotateY: tiltY, scale, transformPerspective: 1600 }}
-      className="device-frame relative block aspect-[16/11] overflow-hidden"
+      style={
+        reduce
+          ? undefined
+          : { rotateX: tiltX, rotateY: tiltY, scale, transformPerspective: 1600 }
+      }
+      className="device-frame relative block aspect-[16/11] min-w-0 w-full overflow-hidden"
     >
       {cyan ? <SoftwareHud progress={progress} reduce={reduce} /> : <MachineryHud progress={progress} reduce={reduce} />}
 
       <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-between px-4 py-3 sm:px-5 sm:py-4">
-        <p className={`text-[0.65rem] tracking-[0.28em] ${cyan ? "text-[var(--cyan)]" : "text-[var(--gold)]"}`}>
+        <p className={`max-w-[50%] truncate text-[0.65rem] tracking-[0.28em] max-md:tracking-[0.12em] ${cyan ? "text-[var(--cyan)]" : "text-[var(--gold)]"}`}>
           {kicker}
         </p>
-        <p className="flex items-center gap-2 text-[0.65rem] tracking-[0.22em] text-[var(--muted)]">
+        <p className="flex min-w-0 items-center gap-2 text-[0.65rem] tracking-[0.22em] text-[var(--muted)] max-md:tracking-[0.08em]">
           <span className={`h-1.5 w-1.5 rounded-full ${cyan ? "bg-[var(--cyan)]" : "bg-[var(--gold)]"}`} />
           {status}
         </p>
@@ -185,17 +189,20 @@ function WorldCard({
 }
 
 function WorldsInner({ progress }: { progress: MotionValue<number> }) {
-  const reduce = useReducedMotion();
+  const { worlds } = useContent();
+  const reduceMotion = useReducedMotion();
+  const desktop = useDesktopSticky();
+  const reduce = Boolean(reduceMotion) || !desktop;
 
   return (
-    <div className="mx-auto flex h-full w-full max-w-7xl flex-col justify-center gap-6 px-4 max-md:justify-start sm:px-8">
-      <div className="max-w-3xl">
-        <p className="text-xs tracking-[0.3em] text-[var(--gold)]">{worlds.kicker}</p>
-        <h2 className="mt-3 text-3xl font-bold sm:text-5xl">{worlds.title}</h2>
-        <p className="mt-4 max-w-2xl leading-8 text-[var(--muted)]">{worlds.fusion}</p>
+    <div className="mx-auto flex h-full w-full min-w-0 max-w-7xl flex-col justify-center gap-6 overflow-x-hidden px-4 max-md:justify-start sm:px-8">
+      <div className="max-w-3xl min-w-0">
+        <p className="text-xs tracking-[0.3em] text-[var(--gold)] max-md:tracking-[0.12em]">{worlds.kicker}</p>
+        <h2 className="mt-3 max-w-full text-3xl font-bold sm:text-5xl">{worlds.title}</h2>
+        <p className="mt-4 max-w-full leading-8 text-[var(--muted)] sm:max-w-2xl">{worlds.fusion}</p>
       </div>
 
-      <div className="device-stage grid gap-5 lg:grid-cols-2">
+      <div className="device-stage grid min-w-0 gap-5 lg:grid-cols-2">
         <WorldCard
           href={worlds.software.href}
           kicker={worlds.software.kicker}

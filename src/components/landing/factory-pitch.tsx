@@ -1,12 +1,14 @@
 "use client";
 
 import { motion } from "motion/react";
-import { factoryPitch } from "@/data/site";
+import { useContent } from "@/i18n/content";
 import { IconChat, IconCheck, IconFactory, IconPen } from "@/components/ui/icons";
 
 const stepIcons = [IconChat, IconPen, IconFactory, IconCheck];
 
 export function FactoryPitch() {
+  const { factoryPitch } = useContent();
+
   return (
     <section id="pitch" className="px-4 py-16 sm:px-8 sm:py-24">
       <div className="glass relative mx-auto max-w-7xl overflow-hidden rounded-[1.8rem] px-5 py-12 sm:rounded-[2.2rem] sm:px-10 sm:py-16">
@@ -21,7 +23,7 @@ export function FactoryPitch() {
         />
 
         <div className="relative grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-          <div>
+          <div className="min-w-0">
             <p className="text-xs tracking-[0.3em] text-[var(--gold)]">{factoryPitch.kicker}</p>
             <h2 className="mt-4 text-3xl font-bold sm:text-5xl">{factoryPitch.title}</h2>
             <p className="mt-4 max-w-xl leading-8 text-[var(--muted)]">{factoryPitch.lead}</p>
@@ -34,7 +36,7 @@ export function FactoryPitch() {
             </a>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid min-w-0 gap-3 sm:grid-cols-2">
             {factoryPitch.steps.map((step, index) => {
               const Icon = stepIcons[index] ?? IconCheck;
               const tone = index % 2 === 0 ? "cyan" : "gold";

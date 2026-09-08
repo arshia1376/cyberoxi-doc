@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { clients } from "@/data/site";
+import { useContent } from "@/i18n/content";
 
 function logoClass(id: string, size: "marquee" | "card") {
   if (id === "ofogh") {
@@ -17,19 +17,20 @@ function invertClass(id: string) {
 }
 
 export function Clients() {
+  const { clients, ui } = useContent();
   const loop = [...clients, ...clients];
 
   return (
     <section id="clients" className="py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <p className="text-xs tracking-[0.3em] text-[var(--gold)]">PARTNERS</p>
-        <h2 className="mt-3 text-3xl font-bold sm:text-4xl">همکاران</h2>
+        <h2 className="mt-3 text-3xl font-bold sm:text-4xl">{ui.partners}</h2>
         <p className="mt-4 max-w-2xl leading-8 text-[var(--muted)]">
-          برندهایی که با آن‌ها ماشین یا سامانه ساخته‌ایم. شهرداری همدان یک‌بار آمده، هرچند دو محصول نرم‌افزاری دارد.
+          {ui.partnersLead}
         </p>
       </div>
 
-      <div className="relative mt-10 overflow-hidden border-y border-[var(--line)] py-8">
+      <div className="relative mt-10 w-full max-w-full overflow-hidden border-y border-[var(--line)] py-8">
         <div className="marquee-track flex w-max items-center gap-12 pr-12 sm:gap-16 sm:pr-16">
           {loop.map((client, index) => (
             <a
@@ -57,7 +58,7 @@ export function Clients() {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.8, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
             whileHover={{ y: -8, rotateX: 4, rotateY: -4 }}
-            className="glass flex items-center gap-4 rounded-[1.4rem] p-5"
+            className="glass flex min-w-0 items-center gap-4 rounded-[1.4rem] p-5"
             style={{ transformPerspective: 800 }}
           >
             <img
@@ -65,7 +66,7 @@ export function Clients() {
               alt=""
               className={`${logoClass(client.id, "card")} ${invertClass(client.id)}`}
             />
-            <div>
+            <div className="min-w-0">
               <p className="font-semibold">{client.name}</p>
               <p className="text-sm text-[var(--muted)]">{client.world}</p>
             </div>

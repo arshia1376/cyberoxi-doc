@@ -2,8 +2,8 @@
 
 import { motion, useReducedMotion, useTransform, type MotionValue } from "motion/react";
 import { CinematicVideo } from "@/components/ui/cinematic-video";
-import { FrameViewLayer } from "@/components/ui/lightbox";
-import { zar } from "@/data/site";
+import { FrameViewLayer, type GalleryFrame } from "@/components/ui/lightbox";
+import { useContent } from "@/i18n/content";
 import { StickyScene } from "@/components/ui/sticky-scene";
 
 function FrameLayer({
@@ -17,7 +17,7 @@ function FrameLayer({
   tiltY,
   scale,
 }: {
-  items: typeof zar.frames;
+  items: GalleryFrame[];
   index: number;
   progress: MotionValue<number>;
   start: number;
@@ -57,6 +57,7 @@ function FrameLayer({
 }
 
 function ZarInner({ progress }: { progress: MotionValue<number> }) {
+  const { zar } = useContent();
   const reduce = useReducedMotion();
   const tiltX = useTransform(progress, [0, 1], reduce ? [0, 0] : [14, -14]);
   const tiltY = useTransform(progress, [0, 1], reduce ? [0, 0] : [12, -12]);
@@ -65,7 +66,7 @@ function ZarInner({ progress }: { progress: MotionValue<number> }) {
 
   return (
     <div className="mx-auto grid h-full w-full max-w-7xl items-center gap-8 px-4 sm:px-8 lg:grid-cols-[0.9fr_1.1fr]">
-      <div>
+      <div className="min-w-0">
         <p className="text-xs tracking-[0.3em] text-[var(--gold)]">MACHINERY · ZAR</p>
         <h2 className="mt-4 text-4xl font-bold sm:text-5xl">{zar.title}</h2>
         <p className="mt-2 text-[var(--cyan)]">{zar.product}</p>
@@ -105,6 +106,8 @@ function ZarInner({ progress }: { progress: MotionValue<number> }) {
 }
 
 export function Zar() {
+  const { zar } = useContent();
+
   return (
     <section>
       <StickyScene id="zar" heightClass="h-[520vh]">

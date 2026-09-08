@@ -1,7 +1,7 @@
 "use client";
 
 import { useReducedMotion } from "motion/react";
-import { automation } from "@/data/site";
+import { useContent } from "@/i18n/content";
 import { IconBadge, IconMachinery } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/reveal";
 
@@ -21,6 +21,7 @@ function HumanMark({ className }: { className?: string }) {
 }
 
 function LaborStage() {
+  const { automation } = useContent();
   const reduce = useReducedMotion();
 
   return (
@@ -73,6 +74,8 @@ function LaborStage() {
 }
 
 export function Automation() {
+  const { automation, ui } = useContent();
+
   return (
     <section id="automation" className="relative overflow-hidden scroll-mt-28 px-4 py-16 sm:px-8 sm:py-24">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_20%_20%,rgba(94,234,212,0.1),transparent_50%),radial-gradient(ellipse_at_80%_10%,rgba(224,177,90,0.12),transparent_48%)]" />
@@ -88,14 +91,14 @@ export function Automation() {
         </Reveal>
 
         <div className="mt-12 grid items-center gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-12">
-          <Reveal delay={0.08}>
+          <Reveal delay={0.08} className="min-w-0">
             <LaborStage />
             <p className="mt-4 text-center text-xs tracking-[0.22em] text-[var(--gold)]">
-              جایگزینی ایستگاه با هوش مصنوعی · بدون خستگی شیفت
+              {ui.automationCaption}
             </p>
           </Reveal>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid min-w-0 gap-4 sm:grid-cols-2">
             {automation.benefits.map((item, index) => (
               <Reveal key={item.title} delay={0.1 + index * 0.06}>
                 <article className="glass relative overflow-hidden rounded-[1.6rem] p-6">

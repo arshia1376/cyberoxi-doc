@@ -11,7 +11,7 @@ type StickySceneProps = {
   fillMobile?: boolean;
 };
 
-function useDesktopSticky() {
+export function useDesktopSticky() {
   const [desktop, setDesktop] = useState(false);
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export function StickyScene({
   return (
     <section id={id} ref={ref} className={`relative max-md:!h-auto ${heightClass} ${className ?? ""}`}>
       <div
-        className={`flex items-center md:sticky md:top-0 md:h-screen md:overflow-hidden ${
+        className={`flex w-full min-w-0 max-w-full items-center overflow-x-hidden md:sticky md:top-0 md:h-screen md:overflow-hidden ${
           fillMobile ? "max-md:min-h-[100svh]" : "max-md:min-h-0 max-md:py-12"
         }`}
       >

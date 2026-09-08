@@ -28,7 +28,7 @@ export function BrandWordmark({ className = "h-6 w-auto" }: LogoProps) {
     <img
       src="/cyberoxi-wordmark-light.png"
       alt={company.brand}
-      className={`object-contain object-right ${className}`}
+      className={`object-contain rtl:object-right ltr:object-left ${className}`}
     />
   );
 }

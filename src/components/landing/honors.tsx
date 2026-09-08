@@ -1,10 +1,11 @@
 "use client";
 
-import { honors, leadershipQuotes } from "@/data/site";
+import { useContent } from "@/i18n/content";
 import { Reveal } from "@/components/ui/reveal";
 import { ViewHotspot } from "@/components/ui/lightbox";
 
 export function Honors() {
+  const { honors, leadershipQuotes, ui } = useContent();
   const featured = honors.find((item) => item.featured);
   const featuredIndex = honors.findIndex((item) => item.featured);
   const rest = honors.filter((item) => !item.featured);
@@ -13,9 +14,9 @@ export function Honors() {
     <section id="honors" className="scroll-mt-28 px-4 pb-16 sm:px-8 sm:pb-24">
       <div className="mx-auto max-w-7xl">
         <p className="text-xs tracking-[0.3em] text-[var(--gold)]">HONORS · PRESS</p>
-        <h2 className="mt-3 text-4xl font-bold">افتخارات و رسانه</h2>
+        <h2 className="mt-3 text-4xl font-bold">{ui.honorsTitle}</h2>
         <p className="mt-4 max-w-2xl leading-8 text-[var(--muted)]">
-          رتبه اول میدون شبکه سه، گواهی‌های رتبه، رونمایی ملی، مجوز واحد فناوری، و بازتاب رسانه‌ای شرکت.
+          {ui.honorsLead}
         </p>
 
         {featured ? (
@@ -40,11 +41,11 @@ export function Honors() {
 
         <div className="mt-8">
           <p className="text-xs tracking-[0.3em] text-[var(--gold)]">VOICE · LEADERSHIP</p>
-          <h3 className="mt-3 text-3xl font-bold">از زبان مدیران</h3>
+          <h3 className="mt-3 text-3xl font-bold">{ui.quotesTitle}</h3>
           <div className="mt-8 grid gap-6 md:grid-cols-2">
             {leadershipQuotes.map((item, index) => (
               <Reveal key={item.name} delay={index * 0.08}>
-                <blockquote className="glass relative overflow-hidden rounded-[1.8rem] p-7 sm:p-8">
+                <blockquote className="glass relative min-w-0 overflow-hidden rounded-[1.8rem] p-7 sm:p-8">
                   <span className="gold-text pointer-events-none absolute left-5 top-2 text-7xl leading-none opacity-40">
                     »
                   </span>
@@ -65,7 +66,7 @@ export function Honors() {
           {rest.map((item) => {
             const index = honors.findIndex((honor) => honor.src === item.src);
             return (
-              <article key={item.src} className="glass overflow-hidden rounded-[1.8rem]">
+              <article key={item.src} className="glass min-w-0 overflow-hidden rounded-[1.8rem]">
                 <div className="device-frame relative aspect-[4/5]">
                   <img
                     src={item.src}

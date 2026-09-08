@@ -1,9 +1,9 @@
 "use client";
 
 import { motion, useReducedMotion, useTransform, type MotionValue } from "motion/react";
-import { vaede } from "@/data/site";
+import { useContent } from "@/i18n/content";
 import { StickyScene } from "@/components/ui/sticky-scene";
-import { FrameViewLayer } from "@/components/ui/lightbox";
+import { FrameViewLayer, type GalleryFrame } from "@/components/ui/lightbox";
 
 function FrameLayer({
   items,
@@ -16,7 +16,7 @@ function FrameLayer({
   tiltY,
   scale,
 }: {
-  items: typeof vaede.frames;
+  items: GalleryFrame[];
   index: number;
   progress: MotionValue<number>;
   start: number;
@@ -45,6 +45,7 @@ function FrameLayer({
 }
 
 function VaedeInner({ progress }: { progress: MotionValue<number> }) {
+  const { vaede, ui } = useContent();
   const reduce = useReducedMotion();
   const tiltX = useTransform(progress, [0, 1], reduce ? [0, 0] : [14, -14]);
   const tiltY = useTransform(progress, [0, 1], reduce ? [0, 0] : [-12, 12]);
@@ -53,7 +54,7 @@ function VaedeInner({ progress }: { progress: MotionValue<number> }) {
 
   return (
     <div className="mx-auto grid h-full w-full max-w-7xl items-center gap-8 px-4 sm:px-8 lg:grid-cols-[0.9fr_1.1fr]">
-      <div>
+      <div className="min-w-0">
         <p className="text-xs tracking-[0.3em] text-[var(--cyan)]">SOFTWARE · VAEDE</p>
         <h2 className="mt-4 text-4xl font-bold sm:text-5xl">{vaede.title}</h2>
         <p className="mt-2 text-[var(--gold)]">{vaede.product}</p>
@@ -70,7 +71,7 @@ function VaedeInner({ progress }: { progress: MotionValue<number> }) {
           rel="noreferrer"
           className="mt-8 inline-flex rounded-full bg-[var(--cyan)] px-5 py-2.5 font-semibold text-[#08221d]"
         >
-          ورود به vaede.ir
+          {ui.enterVaede}
         </a>
       </div>
       <div className="device-stage relative h-[62vh]">

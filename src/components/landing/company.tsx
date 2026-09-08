@@ -2,19 +2,11 @@
 
 import { motion, useReducedMotion, useTransform, type MotionValue } from "motion/react";
 import { CinematicVideo } from "@/components/ui/cinematic-video";
-import { company, licenses } from "@/data/site";
+import { useContent } from "@/i18n/content";
 import { StickyScene } from "@/components/ui/sticky-scene";
 
-const facts = [
-  ["نوع شرکت", company.type],
-  ["وضعیت", company.status],
-  ["تأسیس", company.established],
-  ["شناسه ملی", company.nationalId],
-  ["کد اقتصادی", company.economicCode],
-  ["شماره ثبت", company.registrationNo],
-];
-
 function CompanyInner({ progress }: { progress: MotionValue<number> }) {
+  const { company } = useContent();
   const reduce = useReducedMotion();
   const tilt = useTransform(progress, [0, 1], reduce ? [0, 0] : [12, -12]);
   const tiltX = useTransform(progress, [0, 1], reduce ? [0, 0] : [8, -8]);
@@ -22,7 +14,7 @@ function CompanyInner({ progress }: { progress: MotionValue<number> }) {
 
   return (
     <div className="mx-auto grid h-full w-full max-w-7xl items-center gap-8 px-4 sm:px-8 lg:grid-cols-[0.95fr_1.05fr]">
-      <div>
+      <div className="min-w-0">
         <p className="text-xs tracking-[0.3em] text-[var(--gold)]">COMPANY</p>
         <h2 className="mt-3 text-4xl font-bold">{company.legalName}</h2>
         <p className="mt-4 max-w-xl leading-8 text-[var(--muted)]">{company.address}</p>
@@ -54,6 +46,16 @@ function CompanyInner({ progress }: { progress: MotionValue<number> }) {
 }
 
 export function Company() {
+  const { company, licenses, ui } = useContent();
+  const facts = [
+    [ui.factType, company.type],
+    [ui.factStatus, company.status],
+    [ui.factFounded, company.established],
+    [ui.factNationalId, company.nationalId],
+    [ui.factEconomic, company.economicCode],
+    [ui.factRegistration, company.registrationNo],
+  ];
+
   return (
     <section id="company">
       <StickyScene heightClass="h-[220vh]">
@@ -63,7 +65,7 @@ export function Company() {
       <div className="mx-auto max-w-7xl px-4 pb-16 sm:px-8 sm:pb-24">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {facts.map(([label, value]) => (
-            <div key={label} className="glass rounded-2xl p-5">
+            <div key={label} className="glass min-w-0 rounded-2xl p-5">
               <p className="text-xs text-[var(--muted)]">{label}</p>
               <p className="mt-2 text-lg font-semibold">{value}</p>
             </div>
@@ -75,7 +77,7 @@ export function Company() {
             <a
               key={person.role}
               href={`tel:${person.tel}`}
-              className="glass rounded-2xl p-6"
+              className="glass min-w-0 rounded-2xl p-6"
             >
               <p className="text-sm text-[var(--muted)]">{person.role}</p>
               <p className="mt-2 text-xl font-bold">{person.name}</p>
@@ -84,27 +86,27 @@ export function Company() {
               </p>
             </a>
           ))}
-          <div className="glass rounded-2xl p-6">
-            <p className="text-sm text-[var(--muted)]">اعضای هیئت‌مدیره</p>
+          <div className="glass min-w-0 rounded-2xl p-6">
+            <p className="text-sm text-[var(--muted)]">{ui.boardMembers}</p>
             <p className="mt-2 text-xl font-bold">{company.board.join(" · ")}</p>
           </div>
         </div>
 
-        <h3 className="mt-14 text-2xl font-bold">مجوزها</h3>
+        <h3 className="mt-14 text-2xl font-bold">{ui.licensesHeading}</h3>
         <div className="mt-5 grid gap-4 md:grid-cols-3">
           {licenses.map((item) => (
-            <article key={item.title} className="glass rounded-2xl p-6">
+            <article key={item.title} className="glass min-w-0 rounded-2xl p-6">
               <p className="font-semibold">{item.title}</p>
               <p className="mt-3 text-sm text-[var(--muted)]">{item.issuer}</p>
               {item.start ? (
-                <p className="mt-2 text-sm text-[var(--gold)]">شروع {item.start}</p>
+                <p className="mt-2 text-sm text-[var(--gold)]">{ui.licenseStart} {item.start}</p>
               ) : null}
             </article>
           ))}
         </div>
 
         <p className="mt-8 text-[var(--muted)]">
-          صادرات نرم‌افزار به {company.exports.join("، ")}.
+          {ui.softwareExportsTo} {company.exports.join(ui.listSep)}.
         </p>
       </div>
     </section>

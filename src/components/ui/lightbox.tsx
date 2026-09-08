@@ -11,6 +11,7 @@ import {
   type WheelEvent,
 } from "react";
 import { createPortal } from "react-dom";
+import { useContent } from "@/i18n/content";
 
 const ZOOM_MIN = 1;
 const ZOOM_MAX = 2.6;
@@ -41,6 +42,7 @@ type LightboxProps = {
 };
 
 export function Lightbox({ items, index, onClose }: LightboxProps) {
+  const { ui, locale, dir } = useContent();
   const titleId = useId();
   const closeRef = useRef<HTMLButtonElement>(null);
   const [active, setActive] = useState(index);
@@ -49,6 +51,8 @@ export function Lightbox({ items, index, onClose }: LightboxProps) {
   const current = items[active] ?? items[0];
   const caption = current?.label;
   const many = total > 1;
+  const formatCount = (value: number) =>
+    locale === "fa" ? toFaDigits(value) : String(value);
 
   const go = useCallback(
     (delta: number) => {
@@ -70,12 +74,23 @@ export function Lightbox({ items, index, onClose }: LightboxProps) {
         onClose();
         return;
       }
-      if (event.key === "ArrowLeft" || event.key === "ArrowDown") {
+      const rtl = dir === "rtl";
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        go(rtl ? 1 : -1);
+        return;
+      }
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        go(rtl ? -1 : 1);
+        return;
+      }
+      if (event.key === "ArrowDown") {
         event.preventDefault();
         go(1);
         return;
       }
-      if (event.key === "ArrowRight" || event.key === "ArrowUp") {
+      if (event.key === "ArrowUp") {
         event.preventDefault();
         go(-1);
       }
@@ -86,7 +101,7 @@ export function Lightbox({ items, index, onClose }: LightboxProps) {
       document.body.style.overflow = prevOverflow;
       window.removeEventListener("keydown", onKey);
     };
-  }, [go, onClose]);
+  }, [dir, go, onClose]);
 
   const onWheelZoom = useCallback((event: WheelEvent<HTMLDivElement>) => {
     if (event.cancelable) event.preventDefault();
@@ -104,7 +119,7 @@ export function Lightbox({ items, index, onClose }: LightboxProps) {
   return createPortal(
     <div
       className="fixed inset-0 z-[120] flex items-center justify-center p-6"
-      dir="rtl"
+      dir={dir}
       role="dialog"
       aria-modal="true"
       aria-labelledby={caption ? titleId : undefined}
@@ -112,7 +127,7 @@ export function Lightbox({ items, index, onClose }: LightboxProps) {
       <button
         type="button"
         className="absolute inset-0 bg-[#05060a]/90 backdrop-blur-md"
-        aria-label="بستن"
+        aria-label={ui.close}
         onClick={onClose}
       />
 
@@ -175,12 +190,12 @@ export function Lightbox({ items, index, onClose }: LightboxProps) {
         onClick={onClose}
         className="glass pointer-events-auto absolute top-5 start-5 z-20 rounded-full px-4 py-2 text-sm font-semibold text-[var(--ink)] transition hover:border-[var(--cyan)]/40"
       >
-        بستن
+        {ui.close}
       </button>
 
       {many ? (
         <p className="pointer-events-none absolute top-6 left-1/2 z-20 -translate-x-1/2 text-sm tracking-wide text-[var(--ink)]">
-          «{toFaDigits(active + 1)} / {toFaDigits(total)}»
+          «{formatCount(active + 1)} / {formatCount(total)}»
         </p>
       ) : null}
 
@@ -188,7 +203,7 @@ export function Lightbox({ items, index, onClose }: LightboxProps) {
         <>
           <button
             type="button"
-            aria-label="قبلی"
+            aria-label={ui.prev}
             className="lightbox-nav absolute top-1/2 start-6 z-20 -translate-y-1/2"
             onClick={(event) => {
               event.stopPropagation();
@@ -199,7 +214,7 @@ export function Lightbox({ items, index, onClose }: LightboxProps) {
           </button>
           <button
             type="button"
-            aria-label="بعدی"
+            aria-label={ui.next}
             className="lightbox-nav absolute top-1/2 end-6 z-20 -translate-y-1/2"
             onClick={(event) => {
               event.stopPropagation();
@@ -222,6 +237,7 @@ type ViewHotspotProps = {
 };
 
 export function ViewHotspot({ items, index = 0, className }: ViewHotspotProps) {
+  const { ui } = useContent();
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const caption = items[index]?.label ?? "";
@@ -239,13 +255,13 @@ export function ViewHotspot({ items, index = 0, className }: ViewHotspotProps) {
         ref={triggerRef}
         type="button"
         className={`view-hotspot ${className ?? ""}`}
-        aria-label={`مشاهده ${caption}`}
+        aria-label={`${ui.view} ${caption}`}
         onClick={(event) => {
           event.stopPropagation();
           setOpen(true);
         }}
       >
-        مشاهده
+        {ui.view}
       </button>
       {open ? <Lightbox items={items} index={index} onClose={close} /> : null}
     </>

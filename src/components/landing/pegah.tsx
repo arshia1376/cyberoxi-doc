@@ -1,8 +1,8 @@
 "use client";
 
 import { motion, useReducedMotion, useTransform, type MotionValue } from "motion/react";
-import { FrameViewLayer, ViewHotspot } from "@/components/ui/lightbox";
-import { pegah } from "@/data/site";
+import { FrameViewLayer, ViewHotspot, type GalleryFrame } from "@/components/ui/lightbox";
+import { useContent } from "@/i18n/content";
 import { StickyScene } from "@/components/ui/sticky-scene";
 
 function FrameLayer({
@@ -16,7 +16,7 @@ function FrameLayer({
   tiltY,
   scale,
 }: {
-  items: typeof pegah.frames;
+  items: GalleryFrame[];
   index: number;
   progress: MotionValue<number>;
   start: number;
@@ -56,6 +56,7 @@ function FrameLayer({
 }
 
 function PegahInner({ progress }: { progress: MotionValue<number> }) {
+  const { pegah } = useContent();
   const reduce = useReducedMotion();
   const tiltX = useTransform(progress, [0, 1], reduce ? [0, 0] : [14, -14]);
   const tiltY = useTransform(progress, [0, 1], reduce ? [0, 0] : [12, -12]);
@@ -64,7 +65,7 @@ function PegahInner({ progress }: { progress: MotionValue<number> }) {
 
   return (
     <div className="mx-auto grid h-full w-full max-w-7xl items-center gap-8 px-4 sm:px-8 lg:grid-cols-[0.9fr_1.1fr]">
-      <div>
+      <div className="min-w-0">
         <p className="text-xs tracking-[0.3em] text-[var(--gold)]">MACHINERY · PEGAH</p>
         <h2 className="mt-4 text-4xl font-bold sm:text-5xl">{pegah.title}</h2>
         <p className="mt-2 text-[var(--cyan)]">{pegah.product}</p>
@@ -104,6 +105,8 @@ function PegahInner({ progress }: { progress: MotionValue<number> }) {
 }
 
 export function Pegah() {
+  const { pegah } = useContent();
+
   return (
     <section>
       <StickyScene id="pegah" heightClass="h-[440vh]">

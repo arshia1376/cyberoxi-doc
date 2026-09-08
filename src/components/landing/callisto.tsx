@@ -3,13 +3,14 @@
 import { motion, useMotionValueEvent, useReducedMotion, useTransform, type MotionValue } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { CinematicVideo } from "@/components/ui/cinematic-video";
-import { FrameViewLayer, useVisiblePointer } from "@/components/ui/lightbox";
-import { callisto } from "@/data/site";
+import { FrameViewLayer, useVisiblePointer, type GalleryFrame } from "@/components/ui/lightbox";
+import { useContent } from "@/i18n/content";
 import { StickyScene } from "@/components/ui/sticky-scene";
 
 const STILL_SPAN = 0.68;
 
 function FrameLayer({
+  items,
   index,
   progress,
   start,
@@ -19,6 +20,7 @@ function FrameLayer({
   tiltY,
   scale,
 }: {
+  items: GalleryFrame[];
   index: number;
   progress: MotionValue<number>;
   start: number;
@@ -36,7 +38,7 @@ function FrameLayer({
 
   return (
     <FrameViewLayer
-      items={callisto.frames}
+      items={items}
       index={index}
       opacity={opacity}
       tiltX={tiltX}
@@ -48,6 +50,7 @@ function FrameLayer({
 }
 
 function CallistoNews() {
+  const { callisto, ui } = useContent();
   const ref = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -65,7 +68,7 @@ function CallistoNews() {
           <CinematicVideo src={callisto.video} poster={callisto.brochure} />
         </div>
         <p className="mt-4 text-center text-xs tracking-[0.18em] text-[var(--gold)]">
-          خط تولید کالیستو
+          {ui.callistoLine}
         </p>
       </div>
       <div className="device-stage mx-auto max-w-4xl">
@@ -92,6 +95,7 @@ function CallistoNews() {
 }
 
 function CallistoInner({ progress }: { progress: MotionValue<number> }) {
+  const { callisto } = useContent();
   const reduce = useReducedMotion();
   const tiltX = useTransform(progress, [0, 1], reduce ? [0, 0] : [12, -10]);
   const tiltY = useTransform(progress, [0, 1], reduce ? [0, 0] : [-14, 12]);
@@ -108,7 +112,7 @@ function CallistoInner({ progress }: { progress: MotionValue<number> }) {
 
   return (
     <div className="mx-auto grid h-full w-full max-w-7xl items-center gap-8 px-4 sm:px-8 lg:grid-cols-2">
-      <div>
+      <div className="min-w-0">
         <p className="text-xs tracking-[0.3em] text-[var(--gold)]">MACHINERY · SAHAR</p>
         <h2 className="mt-4 text-4xl font-bold sm:text-5xl">{callisto.title}</h2>
         <p className="mt-2 text-[var(--cyan)]">{callisto.product}</p>
@@ -133,6 +137,7 @@ function CallistoInner({ progress }: { progress: MotionValue<number> }) {
           return (
             <FrameLayer
               key={frame.src}
+              items={callisto.frames}
               index={index}
               progress={progress}
               start={start}

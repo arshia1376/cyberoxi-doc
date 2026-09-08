@@ -1,9 +1,9 @@
 "use client";
 
 import { useReducedMotion, useTransform, type MotionValue } from "motion/react";
-import { parko } from "@/data/site";
+import { useContent } from "@/i18n/content";
 import { StickyScene } from "@/components/ui/sticky-scene";
-import { FrameViewLayer } from "@/components/ui/lightbox";
+import { FrameViewLayer, type GalleryFrame } from "@/components/ui/lightbox";
 
 function FrameLayer({
   items,
@@ -16,7 +16,7 @@ function FrameLayer({
   tiltY,
   scale,
 }: {
-  items: typeof parko.frames;
+  items: GalleryFrame[];
   index: number;
   progress: MotionValue<number>;
   start: number;
@@ -45,6 +45,7 @@ function FrameLayer({
 }
 
 function ParkoInner({ progress }: { progress: MotionValue<number> }) {
+  const { parko, ui } = useContent();
   const reduce = useReducedMotion();
   const tiltX = useTransform(progress, [0, 1], reduce ? [0, 0] : [16, -16]);
   const tiltY = useTransform(progress, [0, 1], reduce ? [0, 0] : [-14, 14]);
@@ -52,7 +53,7 @@ function ParkoInner({ progress }: { progress: MotionValue<number> }) {
 
   return (
     <div className="mx-auto grid h-full w-full max-w-7xl items-center gap-8 px-4 sm:px-8 lg:grid-cols-[0.9fr_1.1fr]">
-      <div>
+      <div className="min-w-0">
         <p className="text-xs tracking-[0.3em] text-[var(--cyan)]">SOFTWARE · PARKO</p>
         <h2 className="mt-4 text-4xl font-bold sm:text-5xl">{parko.title}</h2>
         <p className="mt-2 text-[var(--gold)]">{parko.product}</p>
@@ -63,7 +64,7 @@ function ParkoInner({ progress }: { progress: MotionValue<number> }) {
           ))}
         </ul>
         <p className="mt-4 text-xs text-[var(--muted)]">
-          اعداد داشبورد فقط نمای رابط‌اند، نه آمار رسمی سایت.
+          {ui.dashboardDisclaimer}
         </p>
         <a
           href={parko.url}
@@ -71,7 +72,7 @@ function ParkoInner({ progress }: { progress: MotionValue<number> }) {
           rel="noreferrer"
           className="mt-6 inline-flex rounded-full bg-[var(--cyan)] px-5 py-2.5 font-semibold text-[#08221d]"
         >
-          مشاهده parko.ir
+          {ui.visitParko}
         </a>
       </div>
       <div className="device-stage relative h-[62vh]">
